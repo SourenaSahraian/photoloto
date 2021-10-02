@@ -38,15 +38,18 @@ routes.post('/', async (req, res) => {
 })
 
 routes.post('/addSubmision', async (req, res) => {
-    const { contestId, photoUrl, userId } = req.body
-    const userSubmission = {
-        photoUrl: photoUrl,
-        user: userId
-    }
-    const contest = await ContestModel.findById(contestId);
-    contest?.userSubmissions?.push(userSubmission)
-    const result = await contest.save();
-    res.send('a new submission was added to the contest :' + result);
+    // const { contestId, photoUrl, userId } = req.body
+    // const userSubmission = {
+    //     photoUrl: photoUrl,
+    //     user: userId
+    // }
+    // const contest = await ContestModel.findById(contestId);
+    // contest?.userSubmissions?.push(userSubmission)
+    // const result = await contest.save();
+    // res.send('a new submission was added to the contest :' + result);
+
+    //for testing
+     res.status(201).send('a new submission was added to the contest');
 
 })
 
