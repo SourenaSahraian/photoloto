@@ -8,13 +8,15 @@ const contest = require('./routes/contest');
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const app = express();
-const port = process.env.port || 4005;
+const port = process.env.port || 8000
+// change back to 4005;
 
 app.set('view engine', 'ejs')
 app.use(bodyParser.json());
 app.use(cookieSession({
     maxAge: 24 * 60 * 60 * 1000,
-    keys: [keys.session.key]
+    keys: [keys.session.key],
+    signed: false
 }))
 
 app.use(passport.initialize());
@@ -27,8 +29,8 @@ mongoose.connect(keys.mongodb.connectionUrl, (err, client) => {
     //  console.log(' client ', client)
 })
 
-app.get('/home', (req, res) => {
-    res.send('Hello World!')
+app.get('/', (req, res) => {
+    res.render('login');
 })
 
 

@@ -2,12 +2,12 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const keys = require('../config/keys');
 const passport = require('passport');
 const User = require('../models/userModel');
-
 const { authentication: { google } } = keys;
 
 passport.serializeUser(async (user, done) => {
     //note , this is the mongo id for the user 
     console.log('intercepted by the serilizer')
+    //TODO JWT should probably be generated here
     done(null, user.id);
 });
 

@@ -10,6 +10,7 @@ module.exports = {
     },
     session: {
         key: 'Soorena&Jay,Make?photoLoto = happen'
-    }
+    },
+    jwtSignatureKey: "All-hail-king-Soorena"
 
 }
