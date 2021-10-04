@@ -1,14 +1,36 @@
+import React from 'react';
 import './App.css';
 
-import Login from './components/login';
+import client from './api-client';
+
+async function getSignedURLAndPost(file) {
+  const signedURLConfig = await client('/contest/upload');
+
+  await client(signedURLConfig.url, {
+    method: 'PUT',
+    body: file,
+    headers: {
+      'Content-Type': file.type,
+    }
+  })
+}
 
 function App() {
+  const [file, setFile] = React.useState(null);
+  function handleSubmit(event) {
+    event.preventDefault();
+    getSignedURLAndPost(file)
+  }
   return (
-    // <form method="post" action="/contest/addSubmision">
-    //   <input type="file" accept="image/*" />
-    //   <button type="submit">Upload</button>
-    // </form>
-    <Login />
+    <form onSubmit={handleSubmit}>
+      <input
+        name="file"
+        onChange={event => setFile(event.target.files[0])}
+        type="file"
+        accept="image/*"
+      />
+      <button type="submit">Upload</button>
+    </form>
   );
 }
 

@@ -54,7 +54,7 @@ routes.get('/upload', currentUser, requireAuth, (req, res) => {
 
     s3.getSignedUrl('putObject', {
         Bucket: 'photo-loto-bucket',
-        ContentType: 'jpeg',
+        ContentType: 'image/jpeg',
         Key: key
     }, (err, url) => {
         res.status(200).send({key, url});
