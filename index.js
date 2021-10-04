@@ -7,6 +7,7 @@ const login = require('./routes/authentication');
 const contest = require('./routes/contest');
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
+const genericErrorHandler = require('./erros/GenericErrorHandler');
 const app = express();
 const port = process.env.port || 8000
 // change back to 4005;
@@ -24,6 +25,7 @@ app.use(passport.session());
 
 app.use('/', login);
 app.use('/contest', contest)
+app.use(genericErrorHandler)
 
 mongoose.connect(keys.mongodb.connectionUrl, (err, client) => {
     //  console.log(' client ', client)
