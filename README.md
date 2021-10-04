@@ -9,7 +9,7 @@
 * file upload to S3 implementation (In porgress)
 * Setup Scaffolding for Kubernetes
 * Handle env variables for Kubernetes
-* Add dedicated Mongo instance for Auth service in Kuebernetes
+* Add dedicated Mongo instance for Auth service in Kuebernetes (In progress)
 * create react app just for testing the file upload
 * unified error handling :heavy_check_mark:
 * create a payment service
