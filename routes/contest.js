@@ -2,6 +2,17 @@ const routes = require('express').Router();
 const UserModel = require('../models/userModel');
 const ContestModel = require('../models/contestModel');
 const mongoose = require('mongoose');
+const AWS = require('aws-sdk');
+const { v4: uuidv4 } = require('uuid');
+const keys = require('../config/dev');
+const currentUser = require('../middlewares/current-user');
+const requireAuth = require('../middlewares/require-auth');
+
+const s3 = new AWS.S3({
+    accessKeyId: keys.aws.accessKeyId,
+    secretAccessKey: keys.aws.secretAccessKey
+});
+
 //1 .create a contest
 
 //2.delete a contest , availble to Admins only
@@ -37,16 +48,32 @@ routes.post('/', async (req, res) => {
 
 })
 
+routes.get('/upload', currentUser, requireAuth, (req, res) => {
+    const userId = req.user.googleId ;
+    const key = `${userId}/${uuidv4()}.jpeg`;
+
+    s3.getSignedUrl('putObject', {
+        Bucket: 'photo-loto-bucket',
+        ContentType: 'image/jpeg',
+        Key: key
+    }, (err, url) => {
+        res.status(200).send({key, url});
+    });
+});
+
 routes.post('/addSubmision', async (req, res) => {
-    const { contestId, photoUrl, userId } = req.body
-    const userSubmission = {
-        photoUrl: photoUrl,
-        user: userId
-    }
-    const contest = await ContestModel.findById(contestId);
-    contest?.userSubmissions?.push(userSubmission)
-    const result = await contest.save();
-    res.send('a new submission was added to the contest :' + result);
+    // const { contestId, photoUrl, userId } = req.body
+    // const userSubmission = {
+    //     photoUrl: photoUrl,
+    //     user: userId
+    // }
+    // const contest = await ContestModel.findById(contestId);
+    // contest?.userSubmissions?.push(userSubmission)
+    // const result = await contest.save();
+    // res.send('a new submission was added to the contest :' + result);
+
+    //for testing
+     res.status(201).send('a new submission was added to the contest');
 
 })
 
